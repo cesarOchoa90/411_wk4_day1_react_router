@@ -1,14 +1,26 @@
-import React from 'react'
-import cars from '../cars.json'
-// Import {useParams} from "react-router-dom" here //
-
-// import MUI components here //
-// Container, Paper, Chip //
+import React from "react";
+import cars from "../cars.json";
+import { useParams } from "react-router-dom";
+import { Container, Paper, Chip } from "@mui/material";
 
 const Car = (props) => {
-    return (
-        <h1>A specific car</h1>
-    )
-}
+  const { id } = useParams();
+  console.log(id);
+  // this is how to find an object inside of an arra
+  //using an id, extracted from the use params hook
+  const foundCar = cars.find((car) => car.id === Number(id));
+  console.log(foundCar);
+  return (
+    <Container maxWidth="sm">
+      <Paper sx={{ padding: 5 }}>
+        <h1>{foundCar.Name}</h1>
+        {Object.keys(foundCar).map((key,index)=>(
+            <Chip key={index} label={`${key}: ${foundCar[key]}`} />
 
-export default Car
+        ))}
+      </Paper>
+    </Container>
+  );
+};
+
+export default Car;
